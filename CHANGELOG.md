@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 — 2026-10-08
+
+- All project code and documentation in this repository are now MIT licensed, including the core, public Provider protocol, CLI/MCP, generic client wrapper, normalization/model interfaces, examples and tests.
+- Include the MIT notice in the wheel, source archive and generic client package; declare the SPDX license expression in Python package metadata and verify license inputs in the source manifest.
+- Align the neutral localcatalog example's dependency with core 0.2.x. Provider protocol remains 1.0; independent provider packages and third-party dependencies retain their own licenses.
+
 ## 0.2.0 — 2026-10-08
 
 - Complete generic workflow core delivered on main: capability registry, metadata federation/identity, durable retrieval tasks, bounded original storage, canonical normalize/read, CLI and16 MCP tools.

@@ -1,6 +1,8 @@
-# LitBridge core MCP package 0.2.0
+# LitBridge core MCP package 0.2.1
 
 This portable package contains only the generic core and public provider contract. It has no website provider implementations or source catalog.
+
+The core and this generic client wrapper are MIT licensed. Release archives include LICENSE at the package root and server/LICENSE. Independently installed providers and third-party dependencies retain their own licenses.
 
 1. Extract to a dedicated directory.
 2. Run `python scripts/setup_plugin.py` to explicitly create/install its local environment.

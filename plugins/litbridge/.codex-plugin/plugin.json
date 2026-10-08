@@ -1,6 +1,6 @@
 {
   "name": "litbridge",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Local literature discovery, lawful full-text retrieval and Markdown reading through LitBridge.",
   "author": {
     "name": "LE-saber"

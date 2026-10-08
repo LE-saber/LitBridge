@@ -1,12 +1,14 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "litbridge"
-version = "0.2.0"
+version = "0.2.1"
 description = "Local-first literature workflow, document normalization and open provider protocol for AI agents"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = ["httpx>=0.27,<0.29", "pydantic>=2.8,<3", "beautifulsoup4>=4.12,<5", "defusedxml>=0.7,<1", "pypdf[crypto]>=5.9,<7"]
 

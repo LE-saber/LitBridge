@@ -12,6 +12,8 @@ async def test_core_package_and_sdk_startup(tmp_path):
     with zipfile.ZipFile(ROOT/'dist/litbridge-core-plugin.zip') as z:
         names=z.namelist()
         assert 'litbridge/server/docs/PROVIDER_PROTOCOL.md' in names
+        assert z.read('litbridge/LICENSE') == (ROOT/'LICENSE').read_bytes()
+        assert z.read('litbridge/server/LICENSE') == (ROOT/'LICENSE').read_bytes()
         assert all(n.startswith('litbridge/') for n in names)
         source=[n for n in names if n.startswith('litbridge/server/src/')]
         assert all(n.startswith('litbridge/server/src/litbridge/') for n in source)
