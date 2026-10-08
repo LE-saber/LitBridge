@@ -1,20 +1,22 @@
 # LitBridge
 
-**面向 AI agent 的本地文献工作流与文档规范化服务。**
+**English** | [简体中文](README.zh-CN.md)
 
-LitBridge 保留检索结果、来源与原件，管理可恢复的获取任务，将文档转换成带原页/节点定位的 Markdown，再通过 CLI 或 MCP 提供阅读。所有网络来源通过开放 Provider 协议接入。本体不捆绑任何文献网站实现、网站目录、登录配方或来源密钥。
+**Local-first literature workflows and document normalization for AI agents.**
 
-## 能力
+LitBridge preserves search results, provenance and original documents, manages resumable retrieval jobs, and converts documents into Markdown with page or node references for reading through CLI or MCP. All network sources connect through the open Provider protocol. The core ships without literature website implementations, source catalogs, login recipes or source credentials.
 
-- 能力声明与显式启用的 Provider 协议 1.0；多来源结果合并、DOI/来源身份、缓存、超时隔离和熔断。
-- 持久任务队列、租约、失败分类、人工恢复和已有原件复用；获取、格式校验、规范化与阅读分别报告结果。
-- PDF/XML 原件有界存储、SHA-256 校验；规范化 Markdown/结构化块及原页/节点定位。显式本地 HTML 导入也可规范化。
-- 可选离线布局/OCR、按页检查点与取消恢复；可选云端公式识别和可配置第三方图片模型对照。云端默认关闭。
-- CLI 与 16 个 MCP 工具共用服务层。通用浏览器工具仅执行 Provider 提供的受控目标，不提供网站规则。
+## Features
 
-## 安装
+- Provider protocol 1.0 with capability declarations and explicit opt-in; federated results, DOI/source identity, caching, timeout isolation and circuit breakers.
+- Durable job queues, leases, failure classification, human-assisted recovery and reuse of existing originals. Retrieval, format validation, normalization and reading report separate results.
+- Bounded PDF/XML storage with SHA-256 verification; normalized Markdown and structured blocks with page/node references. Explicit local HTML imports can also be normalized.
+- Optional offline layout/OCR, page checkpoints and cancellation recovery; optional cloud formula recognition and configurable image-model comparison. Cloud processing is disabled by default.
+- A shared service layer for the CLI and 16 MCP tools. Generic browser tools operate only on controlled targets supplied by a Provider and include no website rules.
 
-需要 Python 3.11+。从本仓库 Release 下载 wheel，或在源码目录安装：
+## Installation
+
+Requires Python 3.11+. Download a wheel from [Releases](https://github.com/LE-saber/LitBridge/releases), or install from the source directory. The following commands use Windows PowerShell:
 
 ```powershell
 python -m venv .venv
@@ -23,13 +25,13 @@ Copy-Item examples/litbridge.toml litbridge.local.toml
 .venv/Scripts/python.exe -m litbridge --config litbridge.local.toml providers
 ```
 
-未安装、启用 Provider 时，来源列表为空，这是本体默认行为。用于验证开放协议的中立本地目录示例：
+The provider list is empty until you install and enable a Provider. To try the neutral local catalog example for the open protocol:
 
 ```powershell
 .venv/Scripts/python.exe -m pip install --no-deps -e examples/localcatalog
 ```
 
-将自己拥有的元数据保存为 JSON 数组，例如 `[{"title":"Synthetic study","doi":"10.5555/example","year":2024}]`，在本地配置中填写：
+Save metadata you own as a JSON array, such as `[{"title":"Synthetic study","doi":"10.5555/example","year":2024}]`, then add these settings to your local configuration:
 
 ```toml
 enabled_plugins = ["localcatalog"]
@@ -41,32 +43,32 @@ path = "D:/YOUR_PATH/catalog.json"
 .venv/Scripts/python.exe -m litbridge --config litbridge.local.toml search "Synthetic" --provider localcatalog
 ```
 
-本地目录示例仅提供元数据，示例 DOI 不保证在线存在，不提供全文。其它来源由用户独立安装，并显式加入 enabled_plugins；本体不依赖其仓库或实现。
+The local catalog example supplies metadata only. Its sample DOI is not guaranteed to exist online, and it does not provide full text. Install other sources independently and explicitly add their IDs to `enabled_plugins`; the core has no dependency on their repositories or implementations.
 
-## 使用与 MCP
+## Usage and MCP
 
 ```powershell
 .venv/Scripts/python.exe -m litbridge --config litbridge.local.toml doctor
 .venv/Scripts/python.exe -m litbridge --config litbridge.local.toml mcp
 ```
 
-MCP 使用 stdio，可参照 [配置示例](examples/mcp.json)。工具包括 providers、search、resolve、access、retrieve、references、import_url、doctor、batch、job_create、job_run、job_status、job_history、human_run、normalize、read。先检查来源能力，再筛选并获取少量目标，保存原件后分别检查 normalization 与 read。详细步骤见 [阅读工作流](docs/READING_WORKFLOW.md)。
+MCP uses stdio; see the [configuration example](examples/mcp.json). Tools include `providers`, `search`, `resolve`, `access`, `retrieve`, `references`, `import_url`, `doctor`, `batch`, `job_create`, `job_run`, `job_status`, `job_history`, `human_run`, `normalize` and `read`. Inspect provider capabilities, select and retrieve a small set of targets, then check normalization and reading after retaining the originals. See the [reading workflow](docs/READING_WORKFLOW.md) for details.
 
-Release 中 `litbridge-core-plugin.zip` 是通用 Codex/MCP 客户端包装，内含本体服务，仍不含文献站点实现。解压后按包内说明安装依赖，提供本机配置。Python wheel 适合已有运行环境；source ZIP 适合开发。尚未发布到 PyPI，不应假定 `pip install litbridge` 会取得此版本。
+The release asset `litbridge-core-plugin.zip` is a generic Codex/MCP client wrapper containing the core service without literature website implementations. Extract it, follow its dependency setup instructions and provide your local configuration. The wheel suits an existing Python environment; the source ZIP is intended for development. This version has not been published to PyPI, so do not assume `pip install litbridge` will install it.
 
-## 规范化与模型
+## Normalization and models
 
-轻量解析无需大模型；复杂布局可选择独立离线运行环境。扫描页、双栏顺序、表格和公式都可能需要复核；ready/处理进度不表示质量准确率。未知打开密码的文档跳过，原件保留。
+Lightweight parsing requires no large model. Complex layouts can use a separate offline runtime. Scanned pages, two-column reading order, tables and formulas may need review; `ready` status and processing progress do not measure accuracy. Documents with unknown opening passwords are skipped, and originals are preserved.
 
-第三方图片模型通过明确的本地配置接入，凭证保留在进程环境或忽略文件，HTTPS 默认要求。外发仅在显式启用的所选公式裁剪上进行；模型一致率不等于准确率。详情见 [模型配置](docs/MODEL_SERVICES.md) 与 [规范化](docs/NORMALIZATION.md)。
+Connect image models through explicit local configuration, keeping credentials in the process environment or ignored files. HTTPS is required by default. External processing is limited to selected formula crops when explicitly enabled; agreement between models is not accuracy. See [model configuration](docs/MODEL_SERVICES.md) and [normalization](docs/NORMALIZATION.md).
 
-## 安全与边界
+## Security and boundaries
 
-文献、网页和模型输出始终视为不可信数据。Provider 是用户信任的 Python 包，当前不是进程沙箱；不会自动建立订阅权限、完成验证码或代替登录。API 权利、浏览器权利、原件成功和可读性需要各自验证。核心网络工具限制 HTTPS、目标域、大小和凭证跨域跳转。
+Treat literature, web pages and model output as untrusted data. Providers are trusted Python packages and are not isolated by a process sandbox. The core does not grant subscription access, solve CAPTCHAs or log in for you. API rights, browser rights, successful retrieval and readability require separate verification. Core network tools enforce HTTPS, target domains, size limits and credential handling across redirects.
 
-不要提交密钥、机构会话、浏览器 profile、下载论文、全文、模型权重或本机报告。云端增强可能发送选定图片并产生费用，应先查看配置和限额。[安全说明](docs/SECURITY.md)详述这些边界。
+Do not commit keys, institutional sessions, browser profiles, downloaded papers, full text, model weights or local reports. Cloud enhancement may send selected images and incur charges; review configuration and limits first. See [security and privacy](docs/SECURITY.md).
 
-## 开发
+## Development
 
 ```powershell
 .venv/Scripts/python.exe -m pip install -e ".[dev,mcp,browser]"
@@ -76,10 +78,10 @@ Release 中 `litbridge-core-plugin.zip` 是通用 Codex/MCP 客户端包装，�
 .venv/Scripts/python.exe scripts/build_plugin.py
 ```
 
-公开 API：[Provider 协议](docs/PROVIDER_PROTOCOL.md)。版本：[更新记录](CHANGELOG.md)。CI 在独立环境验证本体、官方 MCP SDK 和发布包，不访问用户机构会话。网络/浏览器验收不能由合成测试代替。
+Public API: [Provider protocol](docs/PROVIDER_PROTOCOL.md). Versions: [changelog](CHANGELOG.md). CI verifies the core, official MCP SDK and distribution packages in independent environments without accessing institutional sessions. Synthetic tests do not replace network/browser acceptance checks.
 
-当前版本 0.2.1，Provider 协议保持 1.0。旧配置中来源专属字段应交由对应独立 Provider 配置；本体默认零来源。
+Current version: 0.2.1. Provider protocol: 1.0. Source-specific fields from older configurations belong in the corresponding independent Provider options; the core starts with zero sources.
 
-## 许可证
+## License
 
-本仓库全部项目代码和文档采用 [MIT 许可证](LICENSE)，包括本体、开放 Provider 协议、CLI/MCP、通用客户端包装、规范化与模型接口、示例和测试。独立安装的 Provider 包适用其自身许可证；本仓库许可证不替它们授予许可。第三方依赖和模型权重遵循各自许可证，文献原件的版权归其权利人。
+All project code and documentation in this repository use the [MIT License](LICENSE), including the core, open Provider protocol, CLI/MCP, generic client wrapper, normalization/model interfaces, examples and tests. Independently installed Provider packages use their own licenses; this repository's license does not grant rights to them. Third-party dependencies and model weights retain their own licenses, and original literature remains subject to its rights holders' copyright.

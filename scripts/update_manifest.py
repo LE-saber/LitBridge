@@ -2,7 +2,7 @@
 import hashlib,json
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-names=['LICENSE','README.md','AGENTS.md','CHANGELOG.md','pyproject.toml','.gitignore','.gitattributes','.github/workflows/ci.yml']
+names=['LICENSE','README.md','README.zh-CN.md','AGENTS.md','CHANGELOG.md','pyproject.toml','.gitignore','.gitattributes','.github/workflows/ci.yml']
 for folder in ('src','tests','scripts','docs','examples','plugins'):
     names += [p.relative_to(root).as_posix() for p in (root/folder).rglob('*')
         if p.is_file() and (p.suffix in ('.py','.md','.json','.toml') or p.name == 'LICENSE')
