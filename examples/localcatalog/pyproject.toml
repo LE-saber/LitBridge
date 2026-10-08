@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "litbridge-localcatalog-example"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["litbridge>=0.1,<0.2"]
+[project.entry-points."litbridge.providers"]
+localcatalog = "litbridge_localcatalog:create_provider"
+[tool.setuptools.packages.find]
+where = ["src"]

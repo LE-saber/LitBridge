@@ -1,0 +1,42 @@
+# Copy to models.local.toml beside the explicit litbridge.local.toml.
+# Model IDs below are starting values: replace them with the third party's exact deployment IDs.
+# Keep credentials in the adjacent .env.litbridge.toml, never this public template.
+schema_version = 1
+
+[profiles.paddle]
+enabled = false
+protocol = "openai_chat"
+base_url = ""  # e.g. https://YOUR-SERVICE/compatible-mode/v1 (without /chat/completions)
+allow_insecure_http = false  # Set true only for an explicitly accepted HTTP service.
+endpoint_path = "/chat/completions"
+model = "PaddleOCR-VL-1.5"
+vision = true
+api_key_env = "LITBRIDGE_MODEL_API_KEY"
+api_key_header = "Authorization"
+api_key_prefix = "Bearer "
+prompt = "Formula Recognition:"
+max_tokens = 2048
+temperature = 0.0
+timeout_seconds = 45
+
+[profiles.qwen]
+enabled = false
+protocol = "openai_chat"
+base_url = ""
+allow_insecure_http = false  # Set true only for an explicitly accepted HTTP service.
+endpoint_path = "/chat/completions"
+model = "Qwen3.5-35B-A3B"
+vision = true
+api_key_env = "LITBRIDGE_MODEL_API_KEY"
+api_key_header = "Authorization"
+api_key_prefix = "Bearer "
+prompt = "Transcribe only the formula visible in this image into LaTeX. Preserve symbols, subscripts, superscripts and equation tags. Do not solve it, explain it or infer missing symbols. Return only LaTeX, without Markdown fences."
+max_tokens = 2048
+temperature = 0.0
+timeout_seconds = 45
+
+[profiles.qwen.extra_body]
+# vLLM/SGLang commonly use this field. Remove/change it if your provider uses another switch.
+chat_template_kwargs = { enable_thinking = false }
+# Some providers instead require: enable_thinking = false
+# Other documented sampling fields can be added here, e.g. top_p = 0.8.

@@ -1,0 +1,9 @@
+# Document normalization
+
+Retain the original and SHA before parsing. The lightweight engine handles PDF/XML and explicitly imported local HTML, reports page/node locators and caches by artifact/parser identity. A layout parser returning no text may fall back to ordinary native extraction. Extraction restrictions with an empty open password are distinct from an unknown required open password; unknown open passwords are skipped.
+
+Optional `structured` engine uses independent normalization_python/normalization_models. It has bounded PDF size/pages/per-call batches, offline model inventory, per-page checkpoints and cancellation recovery. Remote workers/network/plugins are disabled as defense in depth; this is not an OS sandbox. `scripts/prefetch_normalization.py --help` documents explicit model setup. Model downloads are not part of the default install/release.
+
+Formula cloud engines operate on selected rendered regions after offline layout, not a full PDF upload. mathpix requires local app ID/key; model/compare use third-party profiles. No sent/error retry without retry_cloud; force may repeat paid work. Preserve baseline/candidates/crop SHA and independent derived document IDs. Processing percentage describes phase completion; verified_quality_pct is null without external verification. Do not infer whole-paper accuracy from a small sample or candidate agreement.
+
+Remaining limitations include multi-column order, missing fonts/ToUnicode maps, scanned page OCR, bounding boxes, tables, formulas, figures, units, reference mapping and original paper errors. Compare original images for critical symbols and claims. Do not silently repair an author equation simply because a model predicts a conventional expression. Canonical status and source locators describe processing, not scientific correctness.

@@ -1,0 +1,1 @@
+{"mcpServers":{"litbridge":{"command":"/absolute/path/to/python","args":["-m","litbridge","--config","/absolute/path/to/litbridge.local.toml","mcp"]}}}

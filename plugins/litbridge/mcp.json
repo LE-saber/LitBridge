@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {"litbridge": {
+    "type": "stdio",
+    "command": "python",
+    "args": ["${PLUGIN_ROOT}/scripts/run_plugin.py"],
+    "cwd": "${PLUGIN_ROOT}"
+  }}
+}

@@ -1,0 +1,19 @@
+# Provider Protocol 1.0
+
+Implement `litbridge.providers.base.Provider` in a separate trusted Python package. Its `info: ProviderInfo` declares a stable lowercase id, exact protocol="1.0", adapter version, capabilities, state, requirements and limitations. Register a factory in the `litbridge.providers` entry-point group; entry name must equal info.id. Installation does not execute provider code: the user explicitly sets enabled_plugins.
+
+Factory input is `litbridge.config.PluginContext(protocol, options, browser=None, home=None)`. options contains explicit user settings, browser is an optional shared authorized WorkflowBrowser, and home is the selected profile's data root. The two optional fields are additive; older factories using protocol/options remain compatible. Providers must not close the shared browser. A privately owned dedicated bridge may be closed by its owner. No provider is built in or planned by core. Duplicate IDs and incompatible implementations are rejected or isolated.
+
+Supported async methods: search(Query)->SearchPage; resolve(identifier)->Paper|None; access(Paper)->list[Candidate]; retrieve(Candidate)->bytes; references(Paper)->list[dict]; import_url(url)->Paper; health(live=False); close(). Unsupported capabilities raise BridgeError(Code.UNSUPPORTED). Query limit is 1..50 per provider, explicit fanout count up to16; preserve each returned continuation cursor with its query/mode/limit. Native queries require exactly one explicit source. Merged ranking is reciprocal rank fusion, not comparable relevance probabilities.
+
+Identity uses normalized DOI, provider-scoped record IDs, or conservative exact title/year/first-author agreement. Contradictory DOIs never merge. Metadata caching includes provider protocol/version/cache_scope; credential-scoped implementations must supply a fingerprint, never a raw key. Access and download decisions are not cached entitlement proofs. Browser implementations may set cache_scope="browser-uncached".
+
+Raise BridgeError with stable Code, safe message, retryability and actionable guidance. No keys, cookies, raw signed URLs, response bodies or raw exceptions in errors. Core enforces async deadlines, output schemas, size bounds, per-provider concurrency and a transient circuit breaker. Providers are trusted in-process code: synchronous loops, process termination and memory exhaustion are not isolated by an OS sandbox.
+
+Core validates/stores retained originals (32MiB cap, PDF header/EOF, XML body and SHA256). Byte validation is not semantic document identity. Document normalization/read keeps original locators; ready is not a guarantee of formulas, tables or OCR correctness. All returned content is untrusted data.
+
+Optional browser contract: human_target(Paper) returns a BrowserTarget with explicit URLPolicy, document identity predicate and selected response patterns. Its bridge supports human_session(target,wait_seconds) returning HumanSession(download=bytes|None). manual_import/source_url/identity_evidence are optional provenance fields. Source-specific routes and selectors belong to the provider. Generic ReaderCapture requires an explicit URL matcher and response patterns; it has no route fallback. Trusted providers may register exact identity-only HTTPS query routes via transport.register_identity_route(host,path,keys), never credential/signature parameters.
+
+See examples/localcatalog for a synthetic local metadata source. Install it with `python -m pip install --no-deps -e examples/localcatalog`, enable localcatalog and set plugin_options.localcatalog.path to a local bounded JSON array. The example has no website rules or full-text entitlement.
+
+Protocol major remains1.0; the application version0.2.0 marks removal of implicit sources/config fields. Breaking protocol changes require a new major. Unknown protocol versions are not silently accepted.

@@ -1,0 +1,12 @@
+profile = "default"
+enabled_plugins = []
+timeout_seconds = 45
+cache_ttl_seconds = 21600
+cloud_formula_ocr = false
+# managed_browser = true
+# browser_channel = "msedge"
+# verification_mode = "stable"
+# human_wait_seconds = 300
+# model_services = "models.local.toml"
+# normalization_python = "/absolute/path/to/independent/python"
+# normalization_models = "/absolute/path/to/offline/models"

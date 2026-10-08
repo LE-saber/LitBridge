@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "litbridge",
+  "version": "0.2.0",
+  "description": "Local literature discovery, lawful full-text retrieval and Markdown reading through LitBridge.",
+  "author": {
+    "name": "LE-saber"
+  },
+  "repository": "https://github.com/LE-saber/LitBridge",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "LitBridge Local",
+        "shortDescription": "文献检索、全文下载与阅读",
+        "longDescription": "Search scholarly sources, resume downloads after manual verification, and read normalized documents with source locations.",
+        "developerName": "LE-saber",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "defaultPrompt": "使用 LitBridge 检索图神经网络文献，筛选相关论文并获取可阅读的全文。"
+      }
+    }
+  }
+}
