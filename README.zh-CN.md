@@ -1,10 +1,19 @@
 # LitBridge
 
-[English](README.md) | **简体中文**
+[English](https://github.com/LE-saber/LitBridge/blob/main/README.md) | **简体中文** | [繁體中文](https://github.com/LE-saber/LitBridge/blob/main/README.zh-TW.md) | [日本語](https://github.com/LE-saber/LitBridge/blob/main/README.ja.md)
 
 **面向 AI agent 的本地文献工作流与文档规范化服务。**
 
 LitBridge 保留检索结果、来源与原件，管理可恢复的获取任务，将文档转换成带原页/节点定位的 Markdown，再通过 CLI 或 MCP 提供阅读。所有网络来源通过开放 Provider 协议接入。本体不捆绑任何文献网站实现、网站目录、登录配方或来源密钥。
+
+| 项目信息 | 当前基线 |
+| --- | --- |
+| 应用 / 通用客户端 | 0.2.1 |
+| Provider 协议 | 1.0 |
+| 运行环境 | Python 3.11+ |
+| 接口 | CLI 与基于 stdio 的 16 个 MCP 工具 |
+| 默认来源 / 云端处理 | 不启用任何 Provider；云端处理关闭 |
+| 分发方式 | 本仓库 Release 或源码安装 |
 
 ## 能力
 
@@ -16,7 +25,7 @@ LitBridge 保留检索结果、来源与原件，管理可恢复的获取任务�
 
 ## 安装
 
-需要 Python 3.11+。从本仓库 Release 下载 wheel，或在源码目录安装：
+需要 Python 3.11+。从本仓库 [Release](https://github.com/LE-saber/LitBridge/releases) 下载 wheel，或在源码目录安装：
 
 ```powershell
 python -m venv .venv

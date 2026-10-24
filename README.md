@@ -1,10 +1,19 @@
 # LitBridge
 
-**English** | [简体中文](README.zh-CN.md)
+**English** | [简体中文](https://github.com/LE-saber/LitBridge/blob/main/README.zh-CN.md) | [繁體中文](https://github.com/LE-saber/LitBridge/blob/main/README.zh-TW.md) | [日本語](https://github.com/LE-saber/LitBridge/blob/main/README.ja.md)
 
 **Local-first literature workflows and document normalization for AI agents.**
 
 LitBridge preserves search results, provenance and original documents, manages resumable retrieval jobs, and converts documents into Markdown with page or node references for reading through CLI or MCP. All network sources connect through the open Provider protocol. The core ships without literature website implementations, source catalogs, login recipes or source credentials.
+
+| Project fact | Current baseline |
+| --- | --- |
+| Application / generic client | 0.2.1 |
+| Provider protocol | 1.0 |
+| Runtime | Python 3.11+ |
+| Interfaces | CLI and 16 MCP tools over stdio |
+| Default sources / cloud processing | No providers enabled; cloud processing off |
+| Distribution | Repository Releases or source installation |
 
 ## Features
 
